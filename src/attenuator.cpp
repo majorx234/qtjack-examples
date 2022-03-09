@@ -1,8 +1,9 @@
 #include <QCoreApplication>
 
-#include <qtjack/Client>
-#include <qtjack/Processor>
-#include <qtjack/RingBuffer>
+// qtjack includes
+#include <Client>
+#include <Processor>
+#include <RingBuffer>
 
 class MyProcessor : public QtJack::Processor {
 public:
