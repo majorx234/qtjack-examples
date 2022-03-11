@@ -37,6 +37,8 @@ MidiDialMainWindow::MidiDialMainWindow(QWidget *parent)
     slider = mididial_ui->dial;
     slider->setAttribute(Qt::WA_AcceptTouchEvents);
     setCentralWidget(slider);
+    setupJackClient();
+    connect(mididial_ui->dial, &QDial::valueChanged, this, &MidiDialMainWindow::on_twist);
 }
 
 MidiDialMainWindow::~MidiDialMainWindow(){
@@ -44,8 +46,18 @@ MidiDialMainWindow::~MidiDialMainWindow(){
 }
 
 void MidiDialMainWindow::setupJackClient(){
-
+    _client.connectToServer("mididial");
+    _midi_out = _client.registerMidiOutPort("out_1");
+    _client.setMainProcessor(this);
+    _client.activate();
 }
 
 
-void MidiDialMainWindow::on_twist(){}
+void MidiDialMainWindow::on_twist() {
+  int value = mididial_ui->dial->value();
+  printf("dial value: %d\n",value);
+}
+
+void MidiDialMainWindow::process(int samples) {
+
+}
