@@ -24,6 +24,17 @@ Makefile*
 *-build-*
 build
 
+##### Emacs
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
 # QtCreator
 
 *.autosave
@@ -31,3 +42,13 @@ build
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
+
+# cmake
+.ccls-cache
+compile_commands.json
+
+# build
+build*/
+
+# notes
+notes*.txt
