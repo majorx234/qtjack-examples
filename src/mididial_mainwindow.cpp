@@ -20,6 +20,7 @@
 //    If you're interested, contact me at: jacob@omg-it.works                //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+
 #include <QtWidgets/QMainWindow>
 #include <Client>
 #include <QAbstractSlider>

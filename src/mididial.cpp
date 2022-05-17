@@ -21,14 +21,12 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 #include <QApplication>
 #include <QWidget>
 #include <QDial>
 #include <Client>
 
 #include <mididial_mainwindow.hpp>
-
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
