@@ -27,10 +27,9 @@
 
 #include "ui_mididial.h"
 
-
 MidiDialMainWindow::MidiDialMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , Processor(_client) 
+    , Processor(_client)
     , mididial_ui(new Ui::Mididial)
 {
     mididial_ui->setupUi(this);
@@ -64,7 +63,7 @@ void MidiDialMainWindow::process(int samples) {
     jack_nframes_t last_frame_time;
     QtJack::MidiBuffer port_buffer = _midi_out.buffer(samples);
     port_buffer.clearEventBuffer();
-    last_frame_time = _client.getJackTime();     
+    last_frame_time = _client.getJackTime();
     unsigned int printvalue = _value;
     int timestamp = _timestamp;
     int t = timestamp + samples - last_frame_time;
@@ -74,5 +73,5 @@ void MidiDialMainWindow::process(int samples) {
         midiData[1] = 10;
         midiData[2] = 0xff & printvalue;
         port_buffer.writeEvent(t, midiData, 3);
-    }    
+    }
 }
