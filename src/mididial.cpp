@@ -27,7 +27,7 @@
 #include <QDial>
 #include <Client>
 
-#include <mididial_mainwindow.h>
+#include <mididial_mainwindow.hpp>
 
 
 int main(int argc, char **argv) {

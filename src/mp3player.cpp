@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "mp3player_mainwindow.h"
+#include "mp3player_mainwindow.hpp"
 
 
 int main(int argc, char *argv[]) {

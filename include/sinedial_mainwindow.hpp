@@ -21,16 +21,57 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <QApplication>
-#include <QWidget>
-#include <QDial>
+#ifndef SINEDIAL_MAINWINDOW_HPP_
+#define SINEDIAL_MAINWINDOW_HPP_
+
+#include <atomic>
+#include <thread>
+
+// QtJack includes
 #include <Client>
+#include <Processor>
+#include <RingBuffer>
 
-#include <sinedial_mainwindow.hpp>
+// Qt includes
+#include <QMainWindow>
+#include "ui_sinedial.h"
 
-int main(int argc, char **argv) {
-    QApplication app(argc, argv);
-    SineDialMainWindow sinedial_window;
-    sinedial_window.show();
-    return app.exec();
+namespace Ui {
+class Sinedial;
 }
+
+class SineDialMainWindow : public QMainWindow, public QtJack::Processor
+{
+    Q_OBJECT
+
+public:
+    explicit SineDialMainWindow(QWidget *parent = 0);
+    ~SineDialMainWindow();
+
+    void setupJackClient();
+    void process(int samples) override;
+    void sine_wave_generate_function();
+protected slots:
+    void on_twist();
+
+private:
+    Ui::Sinedial *sinedial_ui;
+
+    QtJack::Client _client;
+    QtJack::AudioPort _audio_out[2];
+    QtJack::AudioRingBuffer *_audio_ring_buffer[2];
+    QAbstractSlider *slider_base_freq;
+    QAbstractSlider *slider_mod_freq;
+    std::atomic<unsigned int> _value_base_freq;
+    std::atomic<unsigned int> _value_mod_freq;
+    std::atomic<int> _timestamp;
+    unsigned int sample_rate;
+
+    std::thread sine_wave_generate_thread;
+    unsigned int generated_samples_per_tick;
+    unsigned int samples_offset;
+    QtJack::AudioSample* left;
+    QtJack::AudioSample* right;
+};
+
+#endif // SINEDIAL_MAINWINDOW_HPP_

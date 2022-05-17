@@ -3,7 +3,7 @@
 #include <math.h>
 #define _USE_MATH_DEFINES
 
-#include "sine_wave.h"
+#include "sine_wave.hpp"
 
 void sine_wave(float values[], int freq, int freq_amp, int num_samples, int  offset, int sample_rate) {
   //int num_samples  = static_cast<int>(duration * sample_rate);

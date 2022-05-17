@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // Own includes
-#include "mp3player_mainwindow.h"
+#include "mp3player_mainwindow.hpp"
 #include "ui_mp3player_mainwindow.h"
 
 // Qt includes

@@ -23,19 +23,19 @@
 #include <QtWidgets/QMainWindow>
 #include <Client>
 #include <QAbstractSlider>
-#include "sine_wave.h"
-#include "sinedial_mainwindow.h"
+#include "sine_wave.hpp"
+#include "sinedial_mainwindow.hpp"
 
 SineDialMainWindow::SineDialMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , Processor(_client) 
+    , Processor(_client)
     , sinedial_ui(new Ui::Sinedial)
     , sample_rate(48000)
     , generated_samples_per_tick(1024)
     , samples_offset(0)
 {
     left = (QtJack::AudioSample*)malloc(generated_samples_per_tick* sizeof(QtJack::AudioSample));
-    right = (QtJack::AudioSample*)malloc(generated_samples_per_tick* sizeof(QtJack::AudioSample));        
+    right = (QtJack::AudioSample*)malloc(generated_samples_per_tick* sizeof(QtJack::AudioSample));
     sinedial_ui->setupUi(this);
     slider_base_freq = sinedial_ui->dial_base_freq;
     slider_mod_freq = sinedial_ui->dial_mod_freq;
@@ -56,22 +56,21 @@ SineDialMainWindow::~SineDialMainWindow() {
 void SineDialMainWindow::setupJackClient() {
     _client.connectToServer("sinedial");
     _audio_out[0] = _client.registerAudioOutPort("out_1");
-    _audio_out[1] = _client.registerAudioOutPort("out_2");    
+    _audio_out[1] = _client.registerAudioOutPort("out_2");
     _audio_ring_buffer[0] = new QtJack::AudioRingBuffer();
-    _audio_ring_buffer[1] = new QtJack::AudioRingBuffer(); 
+    _audio_ring_buffer[1] = new QtJack::AudioRingBuffer();
     _client.setMainProcessor(this);
     _client.activate();
 }
 
 void SineDialMainWindow::on_twist() {
     _value_base_freq = sinedial_ui->dial_base_freq->value();
-    _value_mod_freq = sinedial_ui->dial_mod_freq->value();    
+    _value_mod_freq = sinedial_ui->dial_mod_freq->value();
 }
 
 void SineDialMainWindow::process(int samples) {
-
     QtJack::AudioBuffer port_buffer_0 = _audio_out[0].buffer(samples);
-    QtJack::AudioBuffer port_buffer_1 = _audio_out[1].buffer(samples);    
+    QtJack::AudioBuffer port_buffer_1 = _audio_out[1].buffer(samples);
 }
 
 void SineDialMainWindow::sine_wave_generate_function() {
@@ -87,5 +86,4 @@ void SineDialMainWindow::sine_wave_generate_function() {
             generated_samples_per_tick,
             samples_offset,
             sample_rate);
-      
 }
