@@ -109,6 +109,17 @@ target_link_libraries(mididial PRIVATE
 )
 
 ####### Sinedial #######
+set(SINE_WAVE_SOURCES
+  src/sine_wave.cpp
+  include/sine_wave.hpp
+)
+
+add_library(sine_wave)
+target_sources(sine_wave
+	PRIVATE
+  ${SINE_WAVE_SOURCES})
+target_include_directories(sine_wave PRIVATE include)
+
 set(SINEDIAL_SOURCES
   src/sinedial.cpp
   src/sinedial_mainwindow.cpp
@@ -144,161 +155,4 @@ target_link_libraries(sinedial PRIVATE
   Qt5::Widgets
   ${JACK_LIBRARIES}
   sine_wave
-)
-
-####### BPM Tab #######
-set(AVRG_QUEUE_SOURCES
-  src/avrg_queue.cpp
-)
-set(AVRG_QUEUE_HEADERS
-  include/avrg_queue.hpp
-)
-
-set(AVRG_QUEUE_TEST_SOURCES
-  src/test/avrg_queue_test.cpp
-)
-
-set(SINE_WAVE_SOURCES
-  src/sine_wave.cpp
-  include/sine_wave.hpp
-)
-
-set(WAVE_WIDGET_SOURCES
-  src/wave_widget.cpp
-  include/wave_widget.hpp
-)
-
-set(BPM_TAB_SOURCES
-  src/bpm_tab.cpp
-  include/bpm_tab.hpp
-)
-
-set(BPM_TAB_MAIN_SOURCES
-  src/bpm_tab_main.cpp
-)
-
-set(WAVE_WIDGET_TEST_SOURCES
-  include/test/main_window_test.hpp
-  src/test/main_window_test.cpp
-  src/test/wave_widget_test.cpp
-)
-
-QT5_WRAP_CPP(WAVE_WIDGET_MOCrcs
-  ${WAVE_WIDGET_SOURCES}
-)
-
-QT5_WRAP_CPP(BPM_TAB_MOCrcs
-  ${BPM_TAB_SOURCES}
-)
-
-QT5_WRAP_UI(BPM_TAB_UISrcs
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/bpm_tab.ui
-)
-
-QT5_WRAP_CPP(WAVE_WIDGET_TEST_MOCrcs
-  ${WAVE_WIDGET_TEST_SOURCES}
-)
-
-add_library(avrg_queue)
-target_sources(avrg_queue
-  PRIVATE  ${AVRG_QUEUE_SOURCES}
-  PUBLIC ${AVRG_QUEUE_HEADERS}
-)
-target_include_directories(avrg_queue PRIVATE include)
-
-add_executable(avrg_queue_test
-  ${AVRG_QUEUE_TEST_SOURCES}
-)
-target_sources(avrg_queue_test
-  PRIVATE  ${AVRG_QUEUE_TEST_SOURCES}
-)
-target_include_directories(avrg_queue_test PRIVATE include)
-target_link_libraries(avrg_queue_test
-  avrg_queue
-  )
-
-add_library(sine_wave
-  ${SINE_WAVE_SOURCES})
-target_include_directories(sine_wave PRIVATE include)
-
-add_library(wave_widget
-  ${WAVE_WIDGET_SOURCES}
-  ${WAVE_WIDGET_MOCrcs}
-)
-target_include_directories(wave_widget PRIVATE include)
-target_include_directories(wave_widget PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(wave_widget SYSTEM
-  PUBLIC
-  ${Qt5Core_INCLUDE_DIRS}
-  ${Qt5Widgets_INCLUDE_DIRS}
-)
-target_link_libraries(wave_widget PRIVATE
-  Qt5::Core
-  Qt5::Widgets
-  sine_wave
-)
-
-add_executable(wave_widget_test)
-target_sources(wave_widget_test
-  PRIVATE  ${WAVE_WIDGET_TEST_SOURCES}
-  ${WAVE_WIDGET_TEST_MOCrcs}
-)
-target_include_directories(wave_widget_test PRIVATE include)
-target_link_libraries(wave_widget_test
-  wave_widget
-  Qt5::Core
-  Qt5::Widgets
-)
-add_library(bpm_tab)
-target_sources(bpm_tab
-  PRIVATE
-  ${BPM_TAB_SOURCES}
-  ${BPM_TAB_UISrcs}
-  ${BPM_TAB_MOCrcs}
-)
-QT5_WRAP_CPP(BPM_TAB_MAIN_MOCrcs
-  ${BPM_TAB_MAIN_SOURCES}
-)
-
-target_include_directories(bpm_tab PRIVATE include)
-target_include_directories(bpm_tab PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(bpm_tab SYSTEM
-  PUBLIC
-  ${Qt5Core_INCLUDE_DIRS}
-  ${Qt5Widgets_INCLUDE_DIRS}
-  ${JACK_INCLUDE_DIRS}
-  qtjack::qtjack
-)
-target_link_libraries(bpm_tab PRIVATE
-  qtjack::qtjack
-  Qt5::Core
-  Qt5::Widgets
-  ${JACK_LIBRARIES}
-  avrg_queue
-  wave_widget
-  Threads::Threads
-)
-
-add_executable(bpm_tab_main)
-target_sources(bpm_tab_main
-  PRIVATE ${BPM_TAB_MAIN_MOCrcs}
-  PUBLIC ${BPM_TAB_MAIN_SOURCES}
-)
-
-target_include_directories(bpm_tab_main PRIVATE include)
-target_include_directories(bpm_tab_main PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(bpm_tab_main SYSTEM
-  PUBLIC
-  qtjack::qtjack
-  ${JACK_INCLUDE_DIRS}
-  ${Qt5Core_INCLUDE_DIRS}
-  ${Qt5Widgets_INCLUDE_DIRS}4
-)
-
-target_link_libraries(bpm_tab_main
-  PRIVATE
-  Qt5::Core
-  Qt5::Widgets
-  qtjack::qtjack
-  bpm_tab
 )
