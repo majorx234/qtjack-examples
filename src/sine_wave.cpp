@@ -28,9 +28,16 @@
 
 #include "sine_wave.hpp"
 
-void sine_wave(float values[], int freq, int freq_amp, int num_samples, int  offset, int sample_rate) {
+void sine_wave( float values[],
+                int freq,
+                int freq_amp,
+                int num_samples,
+                int  offset,
+                int sample_rate) {
   //int num_samples  = static_cast<int>(duration * sample_rate);
   for (int i =  offset; i < num_samples + offset; i++) {
-    values[i-offset] =  sin((2 * M_PI * freq_amp * i)/ sample_rate) * sin((2 * M_PI * freq * i) / sample_rate)  ;
+    values[i-offset] =
+        sin((2 * M_PI * freq_amp * i)/ sample_rate)
+        * sin((2 * M_PI * freq * i) / sample_rate);
   }
 }
