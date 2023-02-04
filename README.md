@@ -20,11 +20,11 @@ On Arch Linux:
 sudo pacman -S jack2 qt5-base
 ```
 
-## Usage
+## Build
 - build project:
 ```
 git clone https://github.com/majorx234/qtjack-examples.git
-cd qtjack_bpm_tab
+cd qtjack-examples
 mkdir build
 cd build
 cmake ..
